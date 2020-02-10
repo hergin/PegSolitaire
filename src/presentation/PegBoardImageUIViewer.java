@@ -14,6 +14,7 @@ public class PegBoardImageUIViewer extends JFrame implements PegBoardUpdateListe
     private PegBoard theBoard;
 
     private HashMap<Location, JLabel> allLabels;
+    private JTextArea theLoggingArea;
 
     private final ImageIcon pegIcon = new ImageIcon(getClass().getClassLoader().getResource("peg.png")),
             emptyIcon = new ImageIcon(getClass().getClassLoader().getResource("empty.png"));
@@ -21,7 +22,7 @@ public class PegBoardImageUIViewer extends JFrame implements PegBoardUpdateListe
     public PegBoardImageUIViewer(PegBoard aBoard) {
         this.theBoard = aBoard;
         this.allLabels = new HashMap<>();
-        setSize(400, 400);
+        setSize(1000, 400);
         setAlwaysOnTop(true);
         setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
@@ -43,6 +44,19 @@ public class PegBoardImageUIViewer extends JFrame implements PegBoardUpdateListe
             }
         }
 
+        theLoggingArea = new JTextArea(10, 50);
+        theLoggingArea.setEditable(false);
+        var loggingPane = new JScrollPane(theLoggingArea);
+        loggingPane.setBounds(10, 60, 780, 500);
+        loggingPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        constraints.gridx = 7;
+        constraints.gridy = 0;
+        constraints.gridwidth = 50;
+        constraints.gridheight = 20;
+        constraints.insets = new Insets(0, 50, 0, 0);
+        add(loggingPane, constraints);
+        theLoggingArea.append("MOVEMENTS:\n");
+
         setVisible(true);
     }
 
@@ -53,6 +67,7 @@ public class PegBoardImageUIViewer extends JFrame implements PegBoardUpdateListe
         } else if (newValue == PegBoardCellEnum.PEG) {
             allLabels.get(location).setIcon(pegIcon);
         }
+        theLoggingArea.append("New value of location" + location.toString() + ": " + newValue + "\n");
     }
 
 }

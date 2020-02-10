@@ -32,4 +32,9 @@ public class Location {
     public int hashCode() {
         return Objects.hash(X, Y);
     }
+
+    @Override
+    public String toString() {
+        return "(" + X + "," + Y + ')';
+    }
 }
