@@ -1,6 +1,7 @@
 import domain.PegBoard;
 import presentation.PegBoardController;
 import presentation.PegBoardConsoleViewer;
+import presentation.PegBoardImageUIViewer;
 import presentation.PegBoardUIViewer;
 
 public class Main {
