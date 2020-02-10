@@ -1,12 +1,14 @@
 package presentation;
 
+import domain.Location;
 import domain.PegBoard;
 import domain.PegBoardCellEnum;
+import domain.PegBoardUpdateListener;
 
-public class PegBoardViewer {
+public class PegBoardConsoleViewer implements PegBoardUpdateListener {
     private PegBoard theBoard;
 
-    public PegBoardViewer(PegBoard aBoard) {
+    public PegBoardConsoleViewer(PegBoard aBoard) {
         this.theBoard = aBoard;
     }
 
@@ -31,5 +33,10 @@ public class PegBoardViewer {
                 return " ";
         }
 
+    }
+
+    @Override
+    public void onPegBoardUpdated(Location location, PegBoardCellEnum newValue) {
+        displayBoard();
     }
 }

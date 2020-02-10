@@ -9,7 +9,13 @@ public class PegBoard {
 
     private PegBoardCellEnum[][] board;
 
+    private List<PegBoardUpdateListener> subscribers;
+
+    private Location lastUpdatedLocation;
+
     public PegBoard() {
+        subscribers = new ArrayList<>();
+
         String[] initializer = new String[]{
                 "UUPPPUU",
                 "UUPPPUU",
@@ -26,6 +32,29 @@ public class PegBoard {
                 board[i][j] = convertLetterToEnum(initializer[i].charAt(j));
             }
         }
+    }
+
+    public void attachSubscriber(PegBoardUpdateListener subscriber) {
+        subscribers.add(subscriber);
+    }
+
+    public void detachSubscriber(PegBoardUpdateListener subscriber) {
+        subscribers.remove(subscriber);
+    }
+
+    public void updateTheSubscribers() {
+        for (var subscriber : subscribers) {
+            subscriber.onPegBoardUpdated(lastUpdatedLocation, board[lastUpdatedLocation.getX()][lastUpdatedLocation.getY()]);
+        }
+    }
+
+    private void setLastUpdatedLocation(Location location) {
+        lastUpdatedLocation = location;
+        updateTheSubscribers();
+    }
+
+    private void setLastUpdatedLocation(int X, int Y) {
+        setLastUpdatedLocation(new Location(X, Y));
     }
 
     private PegBoardCellEnum convertLetterToEnum(Character letter) {
@@ -47,8 +76,14 @@ public class PegBoard {
         if (isTherePegOn(from) && isBoardEmptyOn(to)) {
             if (canPegMove(from, to)) {
                 board[from.getX()][from.getY()] = PegBoardCellEnum.EMPTY;
+                setLastUpdatedLocation(from);
+
                 board[(from.getX() + to.getX()) / 2][(from.getY() + to.getY()) / 2] = PegBoardCellEnum.EMPTY;
+                setLastUpdatedLocation((from.getX() + to.getX()) / 2, (from.getY() + to.getY()) / 2);
+
                 board[to.getX()][to.getY()] = PegBoardCellEnum.PEG;
+                setLastUpdatedLocation(to);
+
                 return true;
             }
         }
