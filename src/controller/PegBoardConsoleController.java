@@ -1,4 +1,4 @@
-package presentation;
+package controller;
 
 import domain.Location;
 import domain.PegBoard;
@@ -6,11 +6,11 @@ import domain.PegBoard;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class PegBoardController {
+public class PegBoardConsoleController {
 
     PegBoard theBoard;
 
-    public PegBoardController(PegBoard aBoard) {
+    public PegBoardConsoleController(PegBoard aBoard) {
         this.theBoard = aBoard;
     }
 

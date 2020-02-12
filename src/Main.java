@@ -1,5 +1,5 @@
 import domain.PegBoard;
-import presentation.PegBoardController;
+import controller.PegBoardConsoleController;
 import presentation.PegBoardConsoleViewer;
 import presentation.PegBoardImageUIViewer;
 import presentation.PegBoardUIViewer;
@@ -10,13 +10,13 @@ public class Main {
 
         PegBoard theBoard = new PegBoard();
         PegBoardConsoleViewer theViewer = new PegBoardConsoleViewer(theBoard);
-        PegBoardController theController = new PegBoardController(theBoard);
+        PegBoardConsoleController theController = new PegBoardConsoleController(theBoard);
 
         theBoard.attachSubscriber(theViewer);
         theViewer.displayBoard();
 
-        PegBoardUIViewer theUIViewer = new PegBoardUIViewer(theBoard);
-        theBoard.attachSubscriber(theUIViewer);
+        PegBoardImageUIViewer theImageUIViwer = new PegBoardImageUIViewer(theBoard);
+        theBoard.attachSubscriber(theImageUIViwer);
 
         while (true) {
             theController.askForPegToMove();
